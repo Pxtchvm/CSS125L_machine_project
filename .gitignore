@@ -50,3 +50,6 @@ htmlcov/
 # Project planning files (local only)
 CLAUDE.md
 project_plan.md
+
+# Translation cache
+.cache/

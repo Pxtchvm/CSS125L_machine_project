@@ -79,7 +79,7 @@ class SRTInterpreter:
         if target_lang.lower() != 'english':
             print(f"Translating to {target_lang.title()}...")
             translator = Translator(target_lang)
-            entries = translator.translate_entries(entries)
+            entries = translator.translate_entries(entries, file_content=content)
             print(f"  Translation complete")
         else:
             print(f"Language: English (no translation)")
@@ -132,7 +132,7 @@ class SRTInterpreter:
         if target_lang.lower() != 'english':
             print(f"Translating to {target_lang.title()}...")
             translator = Translator(target_lang)
-            entries = translator.translate_entries(entries)
+            entries = translator.translate_entries(entries, file_content=content)
             print(f"  Translation complete")
         else:
             print(f"Language: English (no translation)")
