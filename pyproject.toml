@@ -1,0 +1,7 @@
+[project]
+name = "css125l-machine-project"
+version = "0.1.0"
+description = "A working interpreter for SubRip Text (.srt) subtitle files that can parse, validate, and execute time-synchronized subtitle display commands"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
