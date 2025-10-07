@@ -1,0 +1,20 @@
+1
+00:00:01,000 --> 00:00:03,000
+<i>This is italic text</i>
+
+2
+00:00:04,000 --> 00:00:06,000
+<b>This is bold text</b>
+
+3
+00:00:07,000 --> 00:00:09,000
+<u>This is underlined text</u>
+
+4
+00:00:10,000 --> 00:00:12,000
+<font color="#FF0000">This is red text</font>
+
+5
+00:00:13,000 --> 00:00:16,000
+<i><b>This is both italic and bold</b></i>
+
