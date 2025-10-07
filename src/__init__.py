@@ -1,0 +1,1 @@
+"""SRT Subtitle Interpreter package."""
