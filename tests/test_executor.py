@@ -38,12 +38,12 @@ def test_executor(filepath: str, mode: str = "sequential", speed_factor: float =
     # Tokenize
     lexer = Lexer()
     tokens = lexer.tokenize(content)
-    print(f"\n✓ Lexer: {len(tokens)} tokens generated")
+    print(f"\nLexer: {len(tokens)} tokens generated")
 
     # Parse
     parser = Parser(tokens)
     entries = parser.parse()
-    print(f"✓ Parser: {len(entries)} subtitle entries parsed")
+    print(f"Parser: {len(entries)} subtitle entries parsed")
 
     # Execute
     print(f"\n--- Executing subtitles ({mode} mode) ---\n")

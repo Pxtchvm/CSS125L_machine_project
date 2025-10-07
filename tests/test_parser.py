@@ -30,12 +30,12 @@ def test_valid_file(filepath: str):
         # Tokenize
         lexer = Lexer()
         tokens = lexer.tokenize(content)
-        print(f"\n✓ Lexer: {len(tokens)} tokens generated")
+        print(f"\nLexer: {len(tokens)} tokens generated")
 
         # Parse
         parser = Parser(tokens)
         entries = parser.parse()
-        print(f"✓ Parser: {len(entries)} subtitle entries parsed successfully")
+        print(f"Parser: {len(entries)} subtitle entries parsed successfully")
 
         # Display parsed entries
         print("\nParsed subtitle entries:")
@@ -45,10 +45,10 @@ def test_valid_file(filepath: str):
             print(f"    End:   {entry.end_time}")
             print(f"    Text:  {entry.get_text()!r}")
 
-        print("\n✓ SUCCESS: File parsed correctly!")
+        print("\nSUCCESS: File parsed correctly!")
 
     except (LexerError, ParserError) as e:
-        print(f"\n✗ ERROR: {e}")
+        print(f"\nERROR: {e}")
 
 
 def test_invalid_file(filepath: str, expected_error: str = ""):
@@ -69,20 +69,20 @@ def test_invalid_file(filepath: str, expected_error: str = ""):
         # Tokenize
         lexer = Lexer()
         tokens = lexer.tokenize(content)
-        print(f"\n✓ Lexer: {len(tokens)} tokens generated")
+        print(f"\nLexer: {len(tokens)} tokens generated")
 
         # Parse (should fail)
         parser = Parser(tokens)
         entries = parser.parse()
 
-        print(f"\n✗ UNEXPECTED: File parsed without error ({len(entries)} entries)")
+        print(f"\nUNEXPECTED: File parsed without error ({len(entries)} entries)")
         print("   This file should have failed validation!")
 
     except LexerError as e:
-        print(f"\n✓ Lexer caught error: {e}")
+        print(f"\nLexer caught error: {e}")
 
     except ParserError as e:
-        print(f"\n✓ Parser caught error: {e}")
+        print(f"\nParser caught error: {e}")
 
 
 def main():
