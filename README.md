@@ -13,6 +13,69 @@ A Python-based interpreter for SubRip Text (.srt) subtitle files that can parse,
 - ANSI formatting for terminal display (italic, bold, underline, colors)
 - Multiple execution modes (sequential, real-time, accelerated playback)
 
+## Architecture
+
+### Execution Pipeline
+
+The interpreter follows a multi-stage pipeline architecture:
+
+```mermaid
+flowchart TD
+    A[Input .srt File] --> B[Lexer]
+    B -->|Token Stream| C[Parser]
+    C -->|AST Validation| D{Translator}
+    D -->|Optional Translation| E[Translated AST]
+    D -->|Skip Translation| E
+    E --> F{Output Mode}
+    F -->|Execute| G[Executor]
+    F -->|Analyze| H[Statistics]
+    F -->|Export| I[Export Module]
+    G --> J[Formatter]
+    J --> K[Terminal Display]
+    H --> L[Analysis Output]
+    I --> M[.txt or .srt Files]
+```
+
+### Module Architecture
+
+Component relationships and dependencies:
+
+```mermaid
+flowchart TB
+    Main[main.py<br/>CLI Interface]
+    Interp[interpreter.py<br/>Orchestrator]
+
+    Main --> Interp
+
+    subgraph Core Pipeline
+        Lexer[lexer.py<br/>Tokenization]
+        Parser[parser.py<br/>Validation]
+        AST[ast_nodes.py<br/>Data Structures]
+        Trans[translator.py<br/>Multi-language]
+    end
+
+    subgraph Output Modules
+        Exec[executor.py<br/>Time-sync Display]
+        Stats[stats.py<br/>Analysis]
+        Export[export.py<br/>File Export]
+        Format[formatter.py<br/>ANSI Styling]
+    end
+
+    Interp --> Lexer
+    Interp --> Parser
+    Interp --> Trans
+    Interp --> Exec
+    Interp --> Stats
+    Interp --> Export
+
+    Parser --> AST
+    Trans --> AST
+    Exec --> AST
+    Stats --> AST
+    Export --> AST
+    Exec --> Format
+```
+
 ## Installation
 
 ### Prerequisites
