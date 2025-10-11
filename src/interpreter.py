@@ -10,6 +10,7 @@ from src.lexer import Lexer, LexerError
 from src.parser import Parser, ParserError
 from src.translator import Translator, TranslationError
 from src.executor import Executor, ExecutorError
+from src.stats import calculate_statistics, StatisticsError
 
 
 class SRTInterpreter:
@@ -94,6 +95,88 @@ class SRTInterpreter:
 
         print()
         print(f"Interpretation complete!")
+
+    def display_statistics_for_file(self, filepath: str) -> None:
+        """
+        Calculate and display statistics for an SRT subtitle file.
+
+        Args:
+            filepath: Path to .srt file
+
+        Raises:
+            FileNotFoundError: If file doesn't exist
+            LexerError: If tokenization fails
+            ParserError: If parsing fails
+            StatisticsError: If statistics calculation fails
+        """
+        # Validate file exists
+        file_path = Path(filepath)
+        if not file_path.exists():
+            raise FileNotFoundError(f"File not found: {filepath}")
+
+        if not file_path.is_file():
+            raise FileNotFoundError(f"Not a file: {filepath}")
+
+        print(f"Reading file: {filepath}")
+
+        # Read file content
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+        except Exception as e:
+            raise IOError(f"Failed to read file: {e}")
+
+        # Lexing
+        print(f"Tokenizing...")
+        tokens = self.lexer.tokenize(content)
+        print(f"  Generated {len(tokens)} tokens")
+
+        # Parsing
+        print(f"Parsing...")
+        parser = Parser(tokens)
+        entries = parser.parse()
+        print(f"  Parsed {len(entries)} subtitle entries")
+        print()
+
+        # Calculate statistics
+        print(f"Calculating statistics...")
+        stats = calculate_statistics(entries)
+
+        # Display statistics
+        print()
+        print(stats.to_string())
+
+    def display_statistics_for_content(self, content: str) -> None:
+        """
+        Calculate and display statistics for SRT content.
+
+        Args:
+            content: Raw SRT file content
+
+        Raises:
+            LexerError: If tokenization fails
+            ParserError: If parsing fails
+            StatisticsError: If statistics calculation fails
+        """
+        # Lexing
+        print(f"Tokenizing...")
+        tokens = self.lexer.tokenize(content)
+        print(f"  Generated {len(tokens)} tokens")
+
+        # Parsing
+        print(f"Parsing...")
+        parser = Parser(tokens)
+        entries = parser.parse()
+        print(f"  Parsed {len(entries)} subtitle entries")
+        print()
+
+        # Calculate statistics
+        print(f"Calculating statistics...")
+        stats = calculate_statistics(entries)
+
+        # Display statistics
+        print()
+        print(stats.to_string())
 
     def interpret(
         self,

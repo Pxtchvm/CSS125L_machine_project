@@ -12,6 +12,7 @@ from src.lexer import LexerError
 from src.parser import ParserError
 from src.translator import TranslationError, Translator
 from src.executor import ExecutorError
+from src.stats import StatisticsError
 
 
 def main():
@@ -52,6 +53,12 @@ def main():
         help='Target language for subtitle translation (default: filipino)'
     )
 
+    parser.add_argument(
+        '--stats',
+        action='store_true',
+        help='Display statistics about the subtitle file instead of executing it'
+    )
+
     # Parse arguments
     args = parser.parse_args()
 
@@ -60,12 +67,16 @@ def main():
 
     # Execute
     try:
-        interpreter.interpret_file(
-            filepath=args.filepath,
-            mode=args.mode,
-            speed_factor=args.speed,
-            target_lang=args.lang
-        )
+        # If --stats flag is set, display statistics instead of executing
+        if args.stats:
+            interpreter.display_statistics_for_file(filepath=args.filepath)
+        else:
+            interpreter.interpret_file(
+                filepath=args.filepath,
+                mode=args.mode,
+                speed_factor=args.speed,
+                target_lang=args.lang
+            )
         sys.exit(0)
 
     except FileNotFoundError as e:
@@ -90,6 +101,10 @@ def main():
 
     except ExecutorError as e:
         print(f"Executor Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    except StatisticsError as e:
+        print(f"Statistics Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     except KeyboardInterrupt:
