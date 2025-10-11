@@ -31,7 +31,8 @@ class SRTInterpreter:
         filepath: str,
         mode: str = "sequential",
         speed_factor: float = 1.0,
-        target_lang: str = "filipino"
+        target_lang: str = "filipino",
+        enable_formatting: bool = False
     ) -> None:
         """
         Interpret and execute an SRT subtitle file.
@@ -41,6 +42,7 @@ class SRTInterpreter:
             mode: Execution mode ("sequential", "real_time", or "accelerated")
             speed_factor: Speed factor for accelerated mode
             target_lang: Target language for translation
+            enable_formatting: Enable ANSI formatting for HTML tags (default: False)
 
         Raises:
             FileNotFoundError: If file doesn't exist
@@ -90,9 +92,11 @@ class SRTInterpreter:
         print(f"Executing subtitles ({mode} mode)...")
         if mode == "accelerated":
             print(f"  Speed: {speed_factor}x")
+        if enable_formatting:
+            print(f"  Formatting: Enabled (ANSI)")
         print()
 
-        self.executor.execute(entries, mode=mode, speed_factor=speed_factor)
+        self.executor.execute(entries, mode=mode, speed_factor=speed_factor, enable_formatting=enable_formatting)
 
         print()
         print(f"Interpretation complete!")
@@ -184,7 +188,8 @@ class SRTInterpreter:
         content: str,
         mode: str = "sequential",
         speed_factor: float = 1.0,
-        target_lang: str = "filipino"
+        target_lang: str = "filipino",
+        enable_formatting: bool = False
     ) -> None:
         """
         Interpret SRT content directly (not from file).
@@ -194,6 +199,7 @@ class SRTInterpreter:
             mode: Execution mode
             speed_factor: Speed factor for accelerated mode
             target_lang: Target language for translation
+            enable_formatting: Enable ANSI formatting for HTML tags (default: False)
 
         Raises:
             LexerError: If tokenization fails
@@ -225,9 +231,11 @@ class SRTInterpreter:
         print(f"Executing subtitles ({mode} mode)...")
         if mode == "accelerated":
             print(f"  Speed: {speed_factor}x")
+        if enable_formatting:
+            print(f"  Formatting: Enabled (ANSI)")
         print()
 
-        self.executor.execute(entries, mode=mode, speed_factor=speed_factor)
+        self.executor.execute(entries, mode=mode, speed_factor=speed_factor, enable_formatting=enable_formatting)
 
         print()
         print(f"Interpretation complete!")

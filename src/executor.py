@@ -8,6 +8,7 @@ support for multiple execution modes.
 import time
 from typing import List
 from src.ast_nodes import SubtitleEntry, TimeStamp
+from src.formatter import format_subtitle_text
 
 
 class ExecutorError(Exception):
@@ -28,7 +29,7 @@ class Executor:
     def __init__(self):
         self.start_time = None
 
-    def execute(self, entries: List[SubtitleEntry], mode: str = "sequential", speed_factor: float = 1.0) -> None:
+    def execute(self, entries: List[SubtitleEntry], mode: str = "sequential", speed_factor: float = 1.0, enable_formatting: bool = False) -> None:
         """
         Execute subtitle display.
 
@@ -36,6 +37,7 @@ class Executor:
             entries: List of validated SubtitleEntry objects
             mode: Execution mode ("real_time", "accelerated", or "sequential")
             speed_factor: Speed multiplier for accelerated mode (e.g., 2.0 = 2x speed)
+            enable_formatting: Enable ANSI formatting for HTML tags (default: False)
 
         Raises:
             ExecutorError: If execution fails or mode is invalid
@@ -51,18 +53,19 @@ class Executor:
 
         # Execute based on mode
         if mode == "sequential":
-            self._execute_sequential(entries)
+            self._execute_sequential(entries, enable_formatting)
         elif mode == "real_time":
-            self._execute_real_time(entries)
+            self._execute_real_time(entries, enable_formatting)
         elif mode == "accelerated":
-            self._execute_accelerated(entries, speed_factor)
+            self._execute_accelerated(entries, speed_factor, enable_formatting)
 
-    def _execute_sequential(self, entries: List[SubtitleEntry]) -> None:
+    def _execute_sequential(self, entries: List[SubtitleEntry], enable_formatting: bool = False) -> None:
         """
         Execute subtitles sequentially with brief pause between each.
 
         Args:
             entries: List of SubtitleEntry objects
+            enable_formatting: Enable ANSI formatting for HTML tags
         """
         PAUSE_DURATION = 0.5  # seconds between subtitles
 
@@ -70,7 +73,8 @@ class Executor:
             # Display subtitle
             display_time = self._format_timestamp(entry.start_time)
             text = entry.get_text()
-            print(f"[{display_time}] DISPLAY: \"{text}\"")
+            formatted_text = format_subtitle_text(text, enable_formatting)
+            print(f"[{display_time}] DISPLAY: \"{formatted_text}\"")
 
             # Brief pause
             time.sleep(PAUSE_DURATION)
@@ -82,12 +86,13 @@ class Executor:
             # Brief pause before next subtitle
             time.sleep(PAUSE_DURATION)
 
-    def _execute_real_time(self, entries: List[SubtitleEntry]) -> None:
+    def _execute_real_time(self, entries: List[SubtitleEntry], enable_formatting: bool = False) -> None:
         """
         Execute subtitles at actual timestamps.
 
         Args:
             entries: List of SubtitleEntry objects
+            enable_formatting: Enable ANSI formatting for HTML tags
         """
         self.start_time = time.time()
         first_subtitle_time = entries[0].start_time.to_milliseconds()
@@ -105,7 +110,8 @@ class Executor:
             # Display subtitle
             display_time = self._format_timestamp(entry.start_time)
             text = entry.get_text()
-            print(f"[{display_time}] DISPLAY: \"{text}\"")
+            formatted_text = format_subtitle_text(text, enable_formatting)
+            print(f"[{display_time}] DISPLAY: \"{formatted_text}\"")
 
             # Wait for subtitle duration
             time.sleep(duration_ms / 1000.0)
@@ -114,13 +120,14 @@ class Executor:
             clear_time = self._format_timestamp(entry.end_time)
             print(f"[{clear_time}] CLEAR")
 
-    def _execute_accelerated(self, entries: List[SubtitleEntry], speed_factor: float) -> None:
+    def _execute_accelerated(self, entries: List[SubtitleEntry], speed_factor: float, enable_formatting: bool = False) -> None:
         """
         Execute subtitles with accelerated timing.
 
         Args:
             entries: List of SubtitleEntry objects
             speed_factor: Speed multiplier (e.g., 2.0 = 2x speed)
+            enable_formatting: Enable ANSI formatting for HTML tags
         """
         self.start_time = time.time()
         first_subtitle_time = entries[0].start_time.to_milliseconds()
@@ -138,7 +145,8 @@ class Executor:
             # Display subtitle
             display_time = self._format_timestamp(entry.start_time)
             text = entry.get_text()
-            print(f"[{display_time}] DISPLAY: \"{text}\"")
+            formatted_text = format_subtitle_text(text, enable_formatting)
+            print(f"[{display_time}] DISPLAY: \"{formatted_text}\"")
 
             # Wait for subtitle duration (accelerated)
             time.sleep((duration_ms / 1000.0) / speed_factor)

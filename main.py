@@ -85,6 +85,12 @@ def main():
         help='Text export format: plain, numbered, or separated (default: plain)'
     )
 
+    parser.add_argument(
+        '--format',
+        action='store_true',
+        help='Enable ANSI formatting for HTML tags (italic, bold, underline, colors)'
+    )
+
     # Parse arguments
     args = parser.parse_args()
 
@@ -125,7 +131,8 @@ def main():
                 filepath=args.filepath,
                 mode=args.mode,
                 speed_factor=args.speed,
-                target_lang=args.lang
+                target_lang=args.lang,
+                enable_formatting=args.format
             )
 
         sys.exit(0)
