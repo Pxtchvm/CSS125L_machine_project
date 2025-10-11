@@ -13,6 +13,7 @@ from src.parser import ParserError
 from src.translator import TranslationError, Translator
 from src.executor import ExecutorError
 from src.stats import StatisticsError
+from src.export import ExportError
 
 
 def main():
@@ -59,24 +60,74 @@ def main():
         help='Display statistics about the subtitle file instead of executing it'
     )
 
+    parser.add_argument(
+        '--export-txt',
+        nargs='?',
+        const='output.txt',
+        default=None,
+        metavar='PATH',
+        help='Export subtitle text to file (default: output.txt)'
+    )
+
+    parser.add_argument(
+        '--export-srt',
+        nargs='?',
+        const='__AUTO__',  # Marker to compute default based on language
+        default=None,
+        metavar='PATH',
+        help='Export translated SRT file (default: output_{language}.srt)'
+    )
+
+    parser.add_argument(
+        '--export-format',
+        choices=['plain', 'numbered', 'separated'],
+        default='plain',
+        help='Text export format: plain, numbered, or separated (default: plain)'
+    )
+
     # Parse arguments
     args = parser.parse_args()
+
+    # Compute smart default for --export-srt if needed
+    if args.export_srt == '__AUTO__':
+        args.export_srt = f'output_{args.lang}.srt'
 
     # Create interpreter
     interpreter = SRTInterpreter()
 
     # Execute
     try:
-        # If --stats flag is set, display statistics instead of executing
+        # Handle export operations (can combine with --stats)
+        if args.export_txt:
+            interpreter.export_text_from_file(
+                filepath=args.filepath,
+                output_path=args.export_txt,
+                format_type=args.export_format
+            )
+            print()
+
+        if args.export_srt:
+            interpreter.export_srt_from_file(
+                filepath=args.filepath,
+                output_path=args.export_srt,
+                target_lang=args.lang
+            )
+            print()
+
+        # Handle statistics display
         if args.stats:
             interpreter.display_statistics_for_file(filepath=args.filepath)
-        else:
+            print()
+
+        # If no export or stats flags, execute normally
+        if not args.export_txt and not args.export_srt and not args.stats:
             interpreter.interpret_file(
                 filepath=args.filepath,
                 mode=args.mode,
                 speed_factor=args.speed,
                 target_lang=args.lang
             )
+
         sys.exit(0)
 
     except FileNotFoundError as e:
@@ -105,6 +156,10 @@ def main():
 
     except StatisticsError as e:
         print(f"Statistics Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    except ExportError as e:
+        print(f"Export Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     except KeyboardInterrupt:
