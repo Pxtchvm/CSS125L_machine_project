@@ -6,5 +6,6 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "deep-translator>=1.11.4",
+    "ipykernel>=7.0.1",
     "tqdm>=4.67.1",
 ]
