@@ -1,0 +1,90 @@
+1
+00:00:01,000 --> 00:00:02,500
+Welcome to the film festival.
+
+2
+00:00:03,500 --> 00:00:07,000
+The opening ceremony begins shortly.
+
+3
+00:00:08,000 --> 00:00:18,000
+Please silence your mobile phones and enjoy the experience.
+
+4
+00:00:19,000 --> 00:00:21,500
+Act One
+
+5
+00:00:23,000 --> 00:00:28,000
+The story begins on a quiet evening in a small coastal town.
+
+6
+00:00:29,500 --> 00:00:35,000
+The protagonist had been waiting for this moment for years, planning every detail meticulously, knowing that success would depend on precise timing and unwavering determination.
+
+7
+00:00:36,500 --> 00:00:40,000
+She walked through the empty street.
+The moon cast long shadows.
+
+8
+00:00:41,500 --> 00:00:46,000
+Memories flooded back.
+Each step reminded her of the past.
+Nothing felt the same anymore.
+
+9
+00:00:48,000 --> 00:00:53,000
+The detective examined the evidence carefully.
+Every clue mattered.
+Time was running out.
+The truth had to be uncovered.
+
+10
+00:00:55,000 --> 00:00:58,500
+<i>This note was written yesterday.</i>
+
+11
+00:01:00,000 --> 00:01:03,000
+<b>The suspect was seen at midnight.</b>
+
+12
+00:01:04,500 --> 00:01:07,500
+<u>Location: Harbor District</u>
+
+13
+00:01:09,000 --> 00:01:12,500
+<font color="#00FF00">Security footage confirmed the timeline.</font>
+
+14
+00:01:14,000 --> 00:01:18,000
+<font color="#0000FF">Two witnesses</font> provided <font color="#FFFF00">conflicting accounts</font> of the incident.
+
+15
+00:01:20,000 --> 00:01:24,000
+<i><b>The evidence pointed to an inside job.</b></i>
+
+16
+00:01:25,500 --> 00:01:29,000
+<b><u>Critical discovery: The safe was opened from within.</u></b>
+
+17
+00:01:31,000 --> 00:01:35,500
+<i><font color="#FF00FF">Trust no one in this investigation.</font></i>
+
+18
+00:01:37,000 --> 00:01:42,000
+The captain reviewed <b>all the reports</b> carefully.
+She noticed <i>small inconsistencies</i> in the statements.
+<u>Something was clearly wrong.</u>
+
+19
+00:01:44,000 --> 00:01:50,500
+<font color="#FF0000">Breaking news from headquarters</font>: The investigation had uncovered a conspiracy involving multiple departments, and the truth was far more complex than anyone had initially imagined.
+
+20
+00:01:52,000 --> 00:01:58,000
+<i>To be continued...</i>
+<b><font color="#FFD700">The truth will be revealed</font></b> in the next episode.
+Stay tuned for more shocking discoveries.
+
