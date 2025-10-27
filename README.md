@@ -24,6 +24,45 @@ The interpreter follows a simple 3-stage pipeline:
 
 Translation is integrated directly into the executor using Google Translate API (no caching, direct calls).
 
+## 🌐 Web Interface
+
+Try the web interface! We've created a Streamlit app for easy, interactive subtitle processing.
+
+### Running Locally
+
+```bash
+# Install dependencies (including streamlit)
+uv sync
+
+# Run the Streamlit app
+streamlit run app.py
+```
+
+The app will open in your browser at `http://localhost:8501`
+
+### Features
+- 📁 **File Upload** - Drag and drop .srt files or use example files
+- 🌍 **Live Translation** - Translate subtitles to 5+ languages in real-time
+- 💾 **Download Output** - Save processed subtitles as text files
+- 🎨 **Beautiful UI** - Clean, modern interface with dark theme
+
+### Deploying to Streamlit Community Cloud (FREE)
+
+1. **Push your code to GitHub** (this repo!)
+
+2. **Go to [share.streamlit.io](https://share.streamlit.io)**
+
+3. **Sign in with GitHub**
+
+4. **Click "New app"** and select:
+   - Repository: `Pxtchvm/CSS125L_machine_project`
+   - Branch: `streamlit`
+   - Main file path: `app.py`
+
+5. **Click "Deploy"** - Your app will be live at `yourapp.streamlit.app` in a few minutes!
+
+**Note:** Make sure `pyproject.toml` includes all dependencies (deep-translator, streamlit, ipykernel).
+
 ## Installation (We recommend using `uv` but you can use `pip` or other python package managers as well)
 
 ### Installing `uv`
@@ -81,7 +120,15 @@ Translation is integrated directly into the executor using Google Translate API 
 
 ## Quick Start
 
-### Basic Usage
+### Web Interface (Recommended)
+
+```bash
+streamlit run app.py
+```
+
+Then open `http://localhost:8501` in your browser!
+
+### Command Line Usage
 
 Run a subtitle file (English, no translation):
 
